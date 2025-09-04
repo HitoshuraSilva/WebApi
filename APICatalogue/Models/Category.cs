@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 
 namespace APICatalogue.Models;
 
-[Table("Category")]
+[Table("Categories")]
 
 public class Category
 {
