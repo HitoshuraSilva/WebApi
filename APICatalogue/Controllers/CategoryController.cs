@@ -19,19 +19,19 @@ public class CategoriesController : ControllerBase
     [HttpGet("products")]
     public ActionResult<IEnumerable<Category>> GetCategoriesProducts()
     {
-        return _context.Categories.Include(p => p.Products).ToList();
+        return _context.Categories.AsNoTracking().Include(p => p.Products).ToList();
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<Category>> Get()
     {
-        return _context.Categories.ToList();
+        return _context.Categories.AsNoTracking().ToList();
     }
 
     [HttpGet("{id:int}", Name = "GetCategory")]
     public ActionResult<Category> Get(int id)
     {
-        var category = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
+        var category = _context.Categories.AsNoTracking().FirstOrDefault(p => p.CategoryId == id);
 
         if (category == null)
         {
