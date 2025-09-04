@@ -1,0 +1,50 @@
+using APICatalogue.Context;
+using APICatalogue.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace APICatalogue.Controllers;
+[Route("[controller]")]
+[ApiController]
+
+public class CategoriesController : ControllerBase
+{
+    private readonly AppDbContext _context;
+    
+    public CategoriesController(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Category>> Get()
+    {
+        return _context.Categories.ToList();
+    }
+
+    [HttpGet("{id:int}", Name = "GetCategory")]
+    public ActionResult<Category> Get(int id)
+    {
+        var category = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
+
+        if (category == null)
+        {
+            return NotFound("Category not found.");
+        }
+        return Ok(category);
+    }
+
+    [HttpPost]
+    public ActionResult Post(Category category)
+    {
+        if (category is null)
+        {
+            return BadRequest();
+        }
+
+        _context.Categories.Add(category);
+        _context.SaveChanges();
+
+        return new CreatedAtRouteResult("GetCategory", new { id = category.CategoryId }, category);
+    }
+}
