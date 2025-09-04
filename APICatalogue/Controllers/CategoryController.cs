@@ -2,6 +2,7 @@ using APICatalogue.Context;
 using APICatalogue.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogue.Controllers;
 [Route("[controller]")]
@@ -46,5 +47,31 @@ public class CategoriesController : ControllerBase
         _context.SaveChanges();
 
         return new CreatedAtRouteResult("GetCategory", new { id = category.CategoryId }, category);
+    }
+
+    [HttpPut("{id:int}")]
+    public ActionResult Put(int id, Category category)
+    {
+        if (id != category.CategoryId)
+        {
+            return BadRequest();
+        }
+        _context.Entry(category).State = EntityState.Modified;
+        _context.SaveChanges();
+        return Ok(category);
+    }
+
+    [HttpDelete("{id: int}")]
+    public ActionResult<Category> Delete(int id)
+    {
+        var category = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
+
+        if (category == null)
+        {
+            return NotFound("Category not found.");
+        }
+        _context.Categories.Remove(category);
+        _context.SaveChanges();
+        return Ok(category);
     }
 }
