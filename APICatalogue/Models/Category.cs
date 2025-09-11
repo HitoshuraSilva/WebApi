@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.VisualBasic;
+using NuGet.Protocol.Core.Types;
 
 namespace APICatalogue.Models;
 

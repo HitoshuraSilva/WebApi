@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APICatalogue.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250829173419_TableAdjust")]
-    partial class TableAdjust
+    [Migration("20250911181417_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace APICatalogue.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("APICatalogue.Models.Product", b =>
